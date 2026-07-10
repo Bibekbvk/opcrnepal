@@ -8,14 +8,12 @@ class CertificateView extends StatelessWidget {
   final StorageService storageService;
   final String? certificateId;
   final String? dispatchNumber;
-  final VoidCallback onGoToAdmin;
 
   const CertificateView({
     super.key,
     required this.storageService,
     this.certificateId,
     this.dispatchNumber,
-    required this.onGoToAdmin,
   });
 
   @override
@@ -175,38 +173,6 @@ class CertificateView extends StatelessWidget {
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // Subtle settings icon at the bottom of the page or top right (outside the card) to access the admin panel
-                  Positioned(
-                    top: 16,
-                    right: 16,
-                    child: Tooltip(
-                      message: 'Admin Panel',
-                      child: InkWell(
-                        onTap: onGoToAdmin,
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: const Icon(
-                            Icons.admin_panel_settings,
-                            color: Color(0xFF475569), // Slate 600
-                            size: 24,
-                          ),
                         ),
                       ),
                     ),

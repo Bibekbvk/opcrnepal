@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'services/storage_service.dart';
 import 'views/certificate_view.dart';
-import 'views/admin_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,29 +68,7 @@ class MyApp extends StatelessWidget {
             final Uri baseUri = Uri.base;
             print('DEBUG: Uri.base: $baseUri');
             
-            // Check if the current route name is admin or if we explicitly load page=admin
             final String routeName = settings.name ?? '/';
-            final bool isAdminRoute = routeName == '/admin' || 
-                                     routeName.startsWith('/admin?') ||
-                                     baseUri.queryParameters['page'] == 'admin';
-
-            if (isAdminRoute) {
-              print('DEBUG: Routing to AdminView');
-              return MaterialPageRoute(
-                builder: (context) => AdminView(
-                  storageService: storageService,
-                  onGoToPublic: () {
-                    Navigator.pushReplacementNamed(context, '/');
-                  },
-                  onViewCertificate: (id) {
-                    // Navigate to public view for a specific certificate
-                    Navigator.pushNamed(context, '/?id=$id');
-                  },
-                ),
-                settings: RouteSettings(name: '/admin', arguments: settings.arguments),
-              );
-            }
-
             // Otherwise, route to public CertificateView
             // Extract the certificate ID from either URL query parameters (for direct links)
             // or from the route settings name (for in-app Navigation)
@@ -115,9 +92,6 @@ class MyApp extends StatelessWidget {
                 storageService: storageService,
                 certificateId: certId,
                 dispatchNumber: dispatch,
-                onGoToAdmin: () {
-                  Navigator.pushNamed(context, '/admin');
-                },
               ),
               settings: settings,
             );
