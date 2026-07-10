@@ -35,6 +35,13 @@ class StorageService extends ChangeNotifier {
     print('DEBUG: StorageService.init() started. Cloud Mode: $isFirebaseActive');
     
     if (isFirebaseActive) {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove(_storageKey);
+        print('DEBUG: Cleared stale local SharedPreferences cache.');
+      } catch (e) {
+        print('DEBUG: Error clearing local SharedPreferences cache: $e');
+      }
       await _initCloud();
     } else {
       await _initLocal();
